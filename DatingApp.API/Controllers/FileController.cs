@@ -19,7 +19,7 @@ namespace DatingApp.API.Controllers
     {
         private readonly IDatingRepository _repo;
         private readonly IMapper _mapper;
-        readonly string userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        private readonly string userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         public FileController(IDatingRepository repo, IMapper mapper)
         {
