@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using DatingApp.API.Data;
-using DatingApp.API.DTOs;
+using AprioriApp.API.Data;
+using AprioriApp.API.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DatingApp.API.Controllers
+namespace AprioriApp.API.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IDatingRepository _repo;
+        private readonly IAprioriRepository _repo;
         private readonly IMapper _mapper;
 
-        public UsersController(IDatingRepository repo, IMapper mapper)
+        public UsersController(IAprioriRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -57,7 +57,7 @@ namespace DatingApp.API.Controllers
             if (await _repo.SaveAll())
                 return NoContent();
 
-            throw new Exception($"Updating user {id} failed on save!");
+            throw new Exception($"UpApriori user {id} failed on save!");
         }
     }
 }

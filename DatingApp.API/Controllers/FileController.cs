@@ -5,23 +5,23 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using DatingApp.API.Data;
-using DatingApp.API.DTOs;
+using AprioriApp.API.Data;
+using AprioriApp.API.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DatingApp.API.Controllers
+namespace AprioriApp.API.Controllers
 {
     [Authorize]
     [Route("api/fileUpload/{userId}")]
     [ApiController]
     public class FileController : ControllerBase
     {
-        private readonly IDatingRepository _repo;
+        private readonly IAprioriRepository _repo;
         private readonly IMapper _mapper;
         private readonly string userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        public FileController(IDatingRepository repo, IMapper mapper)
+        public FileController(IAprioriRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;

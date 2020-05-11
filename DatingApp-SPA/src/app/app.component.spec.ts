@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'DatingApp-SPA'`, () => {
+  it(`should have as title 'AprioriApp-SPA'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('DatingApp-SPA');
+    expect(app.title).toEqual('AprioriApp-SPA');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('DatingApp-SPA app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('AprioriApp-SPA app is running!');
   });
 });

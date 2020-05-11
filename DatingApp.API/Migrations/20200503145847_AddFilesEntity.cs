@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DatingApp.API.Migrations
+namespace AprioriApp.API.Migrations
 {
     public partial class AddFilesEntity : Migration
     {

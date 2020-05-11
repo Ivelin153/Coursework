@@ -6,15 +6,15 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using DatingApp.API.Data;
-using DatingApp.API.DTOs;
-using DatingApp.API.Helpers;
-using DatingApp.API.Model;
+using AprioriApp.API.Data;
+using AprioriApp.API.DTOs;
+using AprioriApp.API.Helpers;
+using AprioriApp.API.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.FileIO;
 
-namespace DatingApp.API.Controllers
+namespace AprioriApp.API.Controllers
 {
     [Authorize]
     [Route("api/apriori/{userId}")]
@@ -26,12 +26,11 @@ namespace DatingApp.API.Controllers
         private const int _IndexOfStudentId = 1;
         private const int _IndexOfCourseId = 3;
         private readonly IMapper _mapper;
-        private readonly IDatingRepository _repo;
-        string FileName = string.Empty;
-        string DataFile = string.Empty;
-        readonly string userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        private readonly IAprioriRepository _repo;
+        private string _dataFile = string.Empty;
+        private readonly string _userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        public AprioriController(IDatingRepository repo, IMapper mapper)
+        public AprioriController(IAprioriRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
@@ -50,7 +49,7 @@ namespace DatingApp.API.Controllers
 
             var fileFromRepo = await _repo.GetFile(id);
 
-            var fileToExtractDataFrom = $@"{userHome}\Desktop\PTS\userId_{userId.ToString()}\{fileFromRepo.FileName}";
+            var fileToExtractDataFrom = $@"{_userHome}\Desktop\PTS\userId_{userId.ToString()}\{fileFromRepo.FileName}";
 
             if (System.IO.File.Exists(fileToExtractDataFrom))
                 ExtractDataFromFile(userId, fileToExtractDataFrom, fileFromRepo.FileName);
@@ -66,12 +65,12 @@ namespace DatingApp.API.Controllers
 
         private async Task<AprioriResult> ProcessData()
         {
-            var apriori = new Apriori(DataFile);
+            var apriori = new Apriori(_dataFile);
             int k = 1;
             int Support = 2;
             List<ItemSet> ItemSets = new List<ItemSet>();
             var aprioriResult = new AprioriResult();
-            var allLines = await System.IO.File.ReadAllLinesAsync(DataFile);
+            var allLines = await System.IO.File.ReadAllLinesAsync(_dataFile);
             aprioriResult.AllLines = allLines.ToList();
 
             bool next;
@@ -98,7 +97,6 @@ namespace DatingApp.API.Controllers
                     next = true;
                     k++;
                     ItemSets.Add(L);
-                    //aprioriResult.ItemSets.Add(ItemSets);
                 }
             } while (next);
 
@@ -131,16 +129,16 @@ namespace DatingApp.API.Controllers
 
                     sb.ToString().TrimEnd();
                 }
-                DataFile = $@"{userHome}\Desktop\PTS\userId_{userId.ToString()}\{fileName}.txt";
+                _dataFile = $@"{_userHome}\Desktop\PTS\userId_{userId.ToString()}\{fileName}.txt";
 
-                using (TextWriter writer = new StreamWriter(DataFile, false))
+                using (TextWriter writer = new StreamWriter(_dataFile, false))
                 {
                     writer.Write(sb.ToString().TrimEnd());
                 }
             }
             else
             {
-                DataFile = file;
+                _dataFile = file;
             }
         }
     }

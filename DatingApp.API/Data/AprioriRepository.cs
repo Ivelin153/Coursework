@@ -1,16 +1,16 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DatingApp.API.Model;
+using AprioriApp.API.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatingApp.API.Data
+namespace AprioriApp.API.Data
 {
-    public class DatingRepository : IDatingRepository
+    public class AprioriRepository : IAprioriRepository
     {
         private readonly DataContext _context;
 
-        public DatingRepository(DataContext context)
+        public AprioriRepository(DataContext context)
         {
             _context = context;
         }

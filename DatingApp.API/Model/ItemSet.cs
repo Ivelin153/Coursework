@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DatingApp.API.Model
+namespace AprioriApp.API.Model
 {
     public class ItemSet : Dictionary<List<string>, int>
     {

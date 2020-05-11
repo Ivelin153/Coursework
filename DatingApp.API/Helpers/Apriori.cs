@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using DatingApp.API.Model;
+using AprioriApp.API.Model;
 
-namespace DatingApp.API.Helpers
+namespace AprioriApp.API.Helpers
 {
     public class Apriori
     {
         string _FilePath;
-        List<string> list;
-        List<string> DistinctValues;
-        List<ItemSet> ItemSets;
+        List<string> _list;
+        List<string> _DistinctValues;
+        List<ItemSet> _ItemSets;
         public Apriori(string FilePath)
         {
             _FilePath = FilePath;
-            list = System.IO.File.ReadAllLines(FilePath).ToList().Where(a => !string.IsNullOrWhiteSpace(a)).ToList();
-            ItemSets = new List<ItemSet>();
-            SetDistinctValues(list);
+            _list = System.IO.File.ReadAllLines(FilePath).ToList().Where(a => !string.IsNullOrWhiteSpace(a)).ToList();
+            _ItemSets = new List<ItemSet>();
+            SetDistinctValues(_list);
         }
 
         public ItemSet GetItemSet(int length, int support, bool Candidates = false, bool IsFirstItemList = false)
         {
-            List<IEnumerable<string>> result = GetPermutations(DistinctValues, length).ToList();
+            List<IEnumerable<string>> result = GetPermutations(_DistinctValues, length).ToList();
             List<List<string>> data = new List<List<string>>();
             foreach (var item in result)
             {
@@ -35,7 +35,7 @@ namespace DatingApp.API.Helpers
             foreach (var item in data)
             {
                 int count = 0;
-                foreach (var word in list)
+                foreach (var word in _list)
                 {
                     bool found = false;
                     foreach (var item2 in item)
@@ -55,7 +55,7 @@ namespace DatingApp.API.Helpers
                 if ((Candidates && count > 0) || IsFirstItemList || count >= support)
                 {
                     itemSet.Add(item, count);
-                    ItemSets.Add(itemSet);
+                    _ItemSets.Add(itemSet);
                 }
             }
             return itemSet;
@@ -74,8 +74,8 @@ namespace DatingApp.API.Helpers
                         data.Add(item2);
                 }
             }
-            DistinctValues = new List<string>();
-            DistinctValues.AddRange(data.OrderBy(a => a).ToList());
+            _DistinctValues = new List<string>();
+            _DistinctValues.AddRange(data.OrderBy(a => a).ToList());
         }
 
         public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> items, int count)
@@ -130,7 +130,7 @@ namespace DatingApp.API.Helpers
             sb.Append(list.ToDisplay());
             rule.Label = sb.ToString();
             int totalSet = 0;
-            foreach (var first in ItemSets)
+            foreach (var first in _ItemSets)
             {
                 var myItem = first.Keys.Where(a => a.ToDisplay() == set);
                 if (myItem.Count() > 0)
@@ -140,7 +140,7 @@ namespace DatingApp.API.Helpers
                 }
             }
             rule.Confidance = Math.Round(((double)item.Value / totalSet) * 100, 2);
-            rule.Support = Math.Round(((double)item.Value / this.list.Count) * 100, 2);
+            rule.Support = Math.Round(((double)item.Value / this._list.Count) * 100, 2);
             return rule;
         }
     }

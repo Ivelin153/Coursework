@@ -1,6 +1,6 @@
 using System;
 
-namespace DatingApp.API.DTOs
+namespace AprioriApp.API.DTOs
 {
     public class UserForListDto
     {        

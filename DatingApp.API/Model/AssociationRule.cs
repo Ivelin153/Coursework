@@ -1,4 +1,4 @@
-namespace DatingApp.API.Model
+namespace AprioriApp.API.Model
 {
     public class AssociationRule
     {        

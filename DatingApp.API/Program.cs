@@ -1,12 +1,12 @@
 using System;
-using DatingApp.API.Data;
+using AprioriApp.API.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace DatingApp.API
+namespace AprioriApp.API
 {
     public class Program
     {

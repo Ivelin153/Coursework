@@ -1,7 +1,7 @@
-using DatingApp.API.Model;
+using AprioriApp.API.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatingApp.API.Data
+namespace AprioriApp.API.Data
 {
     public class DataContext : DbContext
     {
