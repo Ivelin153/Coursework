@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace DatingApp.API.Controllers
         private readonly IDatingRepository _repo;
         string FileName = string.Empty;
         string DataFile = string.Empty;
+        readonly string userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         public AprioriController(IDatingRepository repo, IMapper mapper)
         {
@@ -48,7 +50,7 @@ namespace DatingApp.API.Controllers
 
             var fileFromRepo = await _repo.GetFile(id);
 
-            var fileToExtractDataFrom = $@"C:\Users\ivelin.todorov\Desktop\PTS\userId_{userId.ToString()}\{fileFromRepo.FileName}";
+            var fileToExtractDataFrom = $@"{userHome}\Desktop\PTS\userId_{userId.ToString()}\{fileFromRepo.FileName}";
 
             if (System.IO.File.Exists(fileToExtractDataFrom))
                 ExtractDataFromFile(userId, fileToExtractDataFrom, fileFromRepo.FileName);
@@ -129,7 +131,7 @@ namespace DatingApp.API.Controllers
 
                     sb.ToString().TrimEnd();
                 }
-                DataFile = $@"C:\Users\ivelin.todorov\Desktop\PTS\userId_{userId.ToString()}\{fileName}.txt";
+                DataFile = $@"{userHome}\Desktop\PTS\userId_{userId.ToString()}\{fileName}.txt";
 
                 using (TextWriter writer = new StreamWriter(DataFile, false))
                 {

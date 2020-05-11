@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -18,6 +19,7 @@ namespace DatingApp.API.Controllers
     {
         private readonly IDatingRepository _repo;
         private readonly IMapper _mapper;
+        readonly string userHome = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         public FileController(IDatingRepository repo, IMapper mapper)
         {
@@ -38,7 +40,7 @@ namespace DatingApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFileForUser(int userId, [FromForm] FileForCreationDto fileForCreationDto)
         {
-            var pathToSave = $@"C:\Users\ivelin.todorov\Desktop\PTS\userId_{userId.ToString()}\";
+            var pathToSave = $@"{userHome}\Desktop\PTS\userId_{userId.ToString()}\";
 
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
@@ -92,7 +94,7 @@ namespace DatingApp.API.Controllers
 
             var user = await _repo.GetUser(userId);
 
-            var pathToDelete = $@"C:\Users\ivelin.todorov\Desktop\PTS\userId_{userId.ToString()}\";
+            var pathToDelete = $@"{userHome}\Desktop\PTS\userId_{userId.ToString()}\";
 
             if (!user.Files.Any(p => p.Id == id))
                 return Unauthorized();
