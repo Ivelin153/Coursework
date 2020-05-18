@@ -30,20 +30,19 @@ export class DataExtractComponent implements OnInit {
     const idAttr = target.attributes.id;
     const value = idAttr.nodeValue;
     console.log(this.authService.currentUser.id);
-    this.counter = 0;
 
-    const test = this.userService.extractData(this.authService.currentUser.id, value).subscribe(res => {
+    const responseData = this.userService.extractData(this.authService.currentUser.id, value).subscribe(res => {
       this.data = res;
     });
 
-    console.log(this.data?.associationRules);
     this.associationRules = this.data?.associationRules;
     this.allLines = this.data?.allLines;
     this.itemSet = this.data?.itemSet;
-    console.log(this.associationRules);
   }
 
-  increment() {
-      this.counter += 1;
+  clearData() {
+    this.allLines = null;
+    this.itemSet = null;
+    this.associationRules = null;
   }
 }

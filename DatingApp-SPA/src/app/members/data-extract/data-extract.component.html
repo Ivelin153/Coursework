@@ -3,21 +3,26 @@
     <div class="card text-center">
       <span class=""><i class="fa fa-file"></i></span>
       <div class="card-body">
-        <h5 class="card-title mt-2 mb-2">{{ file.fileName }}</h5>
+        <h5 class="card-title mt-2 mb-2">{{ file?.fileName }}</h5>
         <div class="text-center">
-          <button id="{{ file.id }}" type="button" class="btn btn-sm btn-primary" (click)="extractData($event)">Extract
+          <button id="{{ file?.id }}" type="button" class="btn btn-sm btn-primary" (click)="extractData($event)">Extract
             <i class="fa fa-database"></i></button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="row mb-10 mt-10"></div>
+<div class="row mt-3">
+  <div class="col-sm-3">
+    <button type="button" class="btn btn-secondary" (click)="clearData()">Clear Data
+      <i class="fa fa-trash"></i></button>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-3">
     <div class="table-responsive">
-      <table *ngIf="allLines?.length != 0" class="table table-striped">
+      <table *ngIf="this.allLines != null" class="table table-striped">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Item set</th>
@@ -25,8 +30,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let line of allLines">
-            <th scope="row">{{ counter - this.allLines.length }} {{ increment() }}</th>
+          <tr *ngFor="let line of allLines; let i = index">
+            <th scope="row">{{ i + 1}}</th>
             <td>{{ line }}</td>
           </tr>
       </table>
@@ -35,7 +40,7 @@
 
   <div class="col-md-4">
     <div class="table-responsive">
-      <table *ngIf="allLines?.length != 0" class="table table-striped">
+      <table *ngIf="this.itemSet != null" class="table table-striped">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Item</th>
@@ -51,27 +56,9 @@
     </div>
   </div>
 
-  <!-- <div class="col-md-4">
-    <div class="table-responsive">
-      <table *ngIf="allLines?.length != 0" class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of itemSet[1] | keyvalue">
-            <th scope="row">{{ item.key }}</th>
-            <td>{{ item.value }}</td>
-          </tr>
-      </table>
-    </div>
-  </div> -->
-
   <div class="col-md-5">
     <div class="table-responsive">
-      <table *ngIf="allLines?.length != 0" class="table table-striped">
+      <table *ngIf="this.associationRules != null" class="table table-striped">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Rule</th>
